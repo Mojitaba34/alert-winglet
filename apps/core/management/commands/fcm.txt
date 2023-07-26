@@ -1,0 +1,74 @@
+from pathlib import Path
+
+import firebase_admin
+from django.conf import settings
+from firebase_admin import credentials, messaging
+from firebase_admin.exceptions import FirebaseError
+
+from apps.core.exceptions import ErrorException
+
+
+class FirebaseNotification:
+    def __init__(self):
+        credentials_file_path = (
+            settings.BASE_DIR / settings.FIREBASE_CREDENTIALS_FILE_NAME
+        )
+
+        if not Path.exists(credentials_file_path):
+            raise ErrorException(error_message="Firebase authentication failed")
+
+        try:
+            firebase_credentials = credentials.Certificate(credentials_file_path)
+        except IOError:
+            raise ErrorException(error_message="Firebase authentication failed")
+        except ValueError:
+            raise ErrorException(error_message="Firebase instance is not accessible")
+
+        try:
+            firebase_admin.get_app()
+        except ValueError:
+            firebase_admin.initialize_app(credential=firebase_credentials)
+
+    def single_push_notification(self, title, content, token):
+        """
+        Send a Notification for specific user
+        :param title: Notification title
+        :param content: Notification body
+        :param token: Provide None empty string containing the user device token
+        """
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title=title,
+                body=content,
+            ),
+            token=token,
+        )
+
+        try:
+            messaging.send(message)
+        except messaging.UnregisteredError:
+            raise ErrorException(error_message="Token is invalid")
+        except FirebaseError:
+            raise ErrorException(error_message=firebase_admin.exceptions.NOT_FOUND)
+
+    def multicast_push_notification(self, title, content, tokens):
+        """
+        Use this link to know how to work with tokens and for Error handling: https://firebase.google.com/docs/cloud-messaging/send-message#python \n
+        :param title: Notification title
+        :param content: Notification body
+        :param tokens: Provide a list of None empty strings containing the user's device's token
+        """
+
+        message = messaging.MulticastMessage(
+            notification=messaging.Notification(
+                title=title,
+                body=content,
+            ),
+            tokens=tokens,
+        )
+        try:
+            messaging.send_multicast(message)
+        except messaging.UnregisteredError:
+            raise ErrorException(error_message="Token's are invalid")
+        except FirebaseError as e:
+            raise ErrorException(error_message=e.cause)

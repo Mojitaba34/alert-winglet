@@ -1,0 +1,7 @@
+[MAIN]
+ignore=migrations,.venv,.git
+disable=
+    C0114,C0115,C0415
+
+[FORMAT]
+max-line-length=120

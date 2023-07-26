@@ -1,0 +1,6 @@
+.venv/
+*.md
+.linuxvenv/
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir

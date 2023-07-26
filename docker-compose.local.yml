@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.local
+    restart: unless-stopped
+    container_name: alert_wing_web
+    hostname: alert_wing_web
+    volumes:
+      - .:/code
+    env_file:
+      - .envs/.django
+    ports:
+      - "8000:8000"
+      - "5566:5566"
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    entrypoint: "/code/entrypoint.sh"
+    healthcheck:
+      test: curl --fail http://localhost:8000/health || exit 1
+      interval: 10s
+      retries: 8
+      start_period: 5s
+      timeout: 5s
+
+  database:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    container_name: alert_wing_database
+    hostname: alert_wing_database
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .envs/.postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 3s
+      retries: 10
+      start_period: 5s
+      timeout: 3s
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    container_name: alert_wing_redis
+    hostname: alert_wing_redis
+    volumes:
+      - ./redis_data:/bitnami/redis/data
+    env_file:
+      - .envs/.redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 3s
+      retries: 10
+      start_period: 5s
+      timeout: 3s

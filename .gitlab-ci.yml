@@ -1,0 +1,23 @@
+stages:
+    - qa
+
+qa_test_stage:
+  image: python:3.9
+  stage: qa
+
+  before_script:
+    # Install dependencies
+    - make pip-dev
+
+  script:
+    # Run linter
+    - make lint-changed-files
+    # Run `black` with `--check` flag
+    - make format-check
+    # Run tests
+    - make test
+
+  only:
+    - merge_requests
+
+  allow_failure: false

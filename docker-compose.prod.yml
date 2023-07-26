@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: ../
+      dockerfile: ./Dockerfile.prod
+    restart: unless-stopped
+    container_name: bisti_web_prod
+    hostname: bisti_web_prod
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.envs/.django
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    entrypoint: "/code/entrypoint.sh"
+    volumes:
+      - ../static:/code/static
+      - ../media:/code/media
+      - ../apps:/code/apps
+    healthcheck:
+      test: curl --fail http://localhost:8000/health || exit 1
+      interval: 10s
+      retries: 8
+      start_period: 5s
+      timeout: 5s
+
+  database:
+    image: postgres:14
+    restart: unless-stopped
+    container_name: bisti_database_prod
+    hostname: bisti_database_prod
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ../.envs/.postgres
+    expose:
+      - 5432
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 3s
+      retries: 10
+      start_period: 5s
+      timeout: 3s
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    container_name: bisti_redis_prod
+    hostname: bisti_redis_prod
+    env_file:
+      - ../.envs/.redis
+    expose:
+      - 6379
+    volumes:
+      - ./redis_data:/bitnami/redis/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 3s
+      retries: 10
+      start_period: 5s
+      timeout: 3s

@@ -1,0 +1,63 @@
+FROM python:3.10-slim AS compile-image
+LABEL stage=compiler
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update; \
+    apt-get install -yqq --no-install-recommends \
+    build-essential gcc software-properties-common python3-psycopg2 libpq-dev python3-dev
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --default-timeout=100 --quiet --no-cache-dir -U --upgrade pip
+RUN pip install --default-timeout=100 --quiet --no-cache-dir wheel
+
+COPY requirements/base.txt .
+COPY requirements/production.txt .
+
+RUN pip install --default-timeout=100 --quiet --no-cache-dir -r ./production.txt
+
+RUN find /opt/venv -type f -name "*.pyc" -delete 2>/dev/null
+RUN find /opt/venv -type f -name "*.pyo" -delete 2>/dev/null
+RUN find /opt/venv -type d -name "test" -name "tests" -delete 2>/dev/null
+
+
+FROM python:3.10-slim AS build-image
+
+COPY --from=compile-image /opt/venv /opt/venv
+
+ENV PATH="/opt/venv/bin:$PATH"
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends \
+    supervisor wget nano curl python3-psycopg2
+
+# Supervisor config
+RUN mkdir -p /var/log/supervisor
+
+ADD ./.supervisord/supervisord.conf /etc/supervisor/supervisord.conf
+ADD ./.supervisord/api.conf /etc/supervisor/conf.d/api.conf
+ADD ./.supervisord/celery_worker.conf /etc/supervisor/conf.d/celery_worker.conf
+ADD ./.supervisord/celery_beat.conf /etc/supervisor/conf.d/celery_beat.conf
+ADD ./.supervisord/celery_flower.conf /etc/supervisor/conf.d/celery_flower.conf
+
+RUN mkdir -p /code/logs/
+
+# For security and image performance, directories will be hardcoded
+COPY .envs /code/.envs
+COPY apps /code/apps
+COPY config /code/config
+COPY static /code/static
+COPY manage.py /code/manage.py
+
+# Entrypoint
+COPY entrypoint.sh /code/entrypoint.sh
+RUN sed -i 's/\r$//g' /code/entrypoint.sh
+RUN chmod +x /code/entrypoint.sh
+
+WORKDIR /code/

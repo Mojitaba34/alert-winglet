@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+make format-check
+make lint-changed-files
