@@ -25,9 +25,7 @@ jobs:
       - name: Build package
         run: python -m build
 
-      - name: Publish distribution 📦 to Test PyPI
+      - name: Testing-alert-winglet
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository-url: https://test.pypi.org/legacy/
