@@ -35,7 +35,7 @@ License
 This project is licensed under the MIT License.
 
 Bug Reports and Feature Requests
--------------------------------
+--------------------------------
 
 Please use the GitHub_issue_ tracker to report any bugs or submit feature requests.
 
