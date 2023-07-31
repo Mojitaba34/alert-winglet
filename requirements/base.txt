@@ -4,6 +4,7 @@ psycopg2~=2.9.5
 django-environ~=0.9.0
 djangorestframework~=3.14.0
 drf-spectacular~=0.25.1
+drf-spectacular-sidecar~=2023.7.1
 django-redis~=5.2.0
 celery[redis]~=5.2.7
 uvicorn[standard]~=0.20.0
