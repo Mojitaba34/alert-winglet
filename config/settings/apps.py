@@ -17,9 +17,17 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-LOCAL_APPS = ["core", "test_api", "alert_winglet"]
+LOCAL_APPS = [
+    "core",
+    "test_api",
+    "alert_winglet",
+]
 
 # CHECK IF INSTALLED APPS INCLUDE THE PACKAGE FIRST
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
