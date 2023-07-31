@@ -15,7 +15,7 @@ Quick start
             "alert-winglet",
         ]
 
-Discord:
+Discord
 -------
 
 1. Set the `DISCORD_WEBHOOK_URL` variable in your Django settings. This is the URL of the Discord webhook you want to use for sending exceptions.
