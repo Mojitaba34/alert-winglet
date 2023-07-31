@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class TestApiConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "apps.test_api"
+    name = "test_api"

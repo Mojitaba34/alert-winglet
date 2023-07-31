@@ -1,4 +1,12 @@
+import os
+import sys
+
 from .handler import BASE_DIR
+
+
+# Define the 'apps' directory path
+APPS_DIR = os.path.join(BASE_DIR, "apps")
+sys.path.insert(0, APPS_DIR)
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -9,11 +17,9 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-LOCAL_APPS = ["apps.core", "apps.test_api", "apps.alert_winglet"]
+LOCAL_APPS = ["core", "test_api", "alert_winglet"]
 
 # CHECK IF INSTALLED APPS INCLUDE THE PACKAGE FIRST
 THIRD_PARTY_APPS = []
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
-APPS_DIR = BASE_DIR / "apps"
