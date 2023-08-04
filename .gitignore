@@ -187,3 +187,6 @@ cython_debug/
 
 # Firebase files
 firebase_key.json
+
+
+postgres_data/
