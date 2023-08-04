@@ -6,8 +6,8 @@ services:
       context: ./
       dockerfile: ./Dockerfile.local
     restart: unless-stopped
-    container_name: alert_wing_web
-    hostname: alert_wing_web
+    container_name: alert_winglet_web
+    hostname: alert_winglet_web
     volumes:
       - .:/code
     env_file:
@@ -31,8 +31,8 @@ services:
   database:
     image: postgres:14-alpine
     restart: unless-stopped
-    container_name: alert_wing_database
-    hostname: alert_wing_database
+    container_name: alert_winglet_database
+    hostname: alert_winglet_database
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     env_file:
@@ -49,8 +49,8 @@ services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    container_name: alert_wing_redis
-    hostname: alert_wing_redis
+    container_name: alert_winglet_redis
+    hostname: alert_winglet_redis
     volumes:
       - ./redis_data:/bitnami/redis/data
     env_file:
