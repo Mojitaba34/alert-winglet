@@ -10,7 +10,7 @@ env = environ.Env()
 DEBUG = env.bool("DEBUG", None)
 
 if DEBUG is None:
-    environ.Env.read_env(BASE_DIR / ".envs" / "django.env.example")
+    environ.Env.read_env(BASE_DIR / ".envs" / ".django")
     DEBUG = env.bool("DEBUG", False)
 
 mimetypes.add_type("application/javascript", ".js", True)

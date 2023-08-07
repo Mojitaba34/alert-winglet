@@ -19,7 +19,6 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     "core",
-    "test_api",
     "alert_winglet",
 ]
 
