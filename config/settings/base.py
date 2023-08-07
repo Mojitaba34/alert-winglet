@@ -3,7 +3,7 @@ from .handler import env
 SECRET_KEY = env.str(
     "SECRET_KEY", "django-insecure-^hx4vco_&p3urjr5p9y1evw7^p%caba0+3p64q=a$!2l&=z=oz"
 )
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1116347814469980270/KW4efZFZelDEp646Ya0gVjYWwvpK0pDvYrlczjD6yn-qihJxY24VVwpN1bgR3ySjT3uh"
+
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 
