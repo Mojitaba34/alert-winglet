@@ -4,7 +4,7 @@ from typing import Any
 import requests
 from django.conf import settings
 
-from apps.alert_winglet.base.sender import BaseSender
+from ..base.sender import BaseSender
 
 
 class DiscordDelivery(BaseSender):

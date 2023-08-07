@@ -6,7 +6,7 @@ from discord import Embed
 from django.http import HttpRequest
 from django.utils import timezone
 
-from apps.alert_winglet.base.manager import BaseManager
+from ..base.manager import BaseManager
 
 
 class DiscordEmbedManager(BaseManager):
