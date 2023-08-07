@@ -17,7 +17,9 @@ class Command(BaseCommand):
 
     def format_warning(self, message: str, warning_type: str = None):
         if warning_type == "str":
-            return self.style.WARNING(f"Warning: Model {message} has not __str__ method.")
+            return self.style.WARNING(
+                f"Warning: Model {message} has not __str__ method."
+            )
 
     def handle(self, *args, **options):
         app_name = options.get("appname")
@@ -45,7 +47,7 @@ class Command(BaseCommand):
             warnings = []
             for app_name in LOCAL_APPS:
                 try:
-                    app_name = app_name.rsplit('.', maxsplit=1)[-1]
+                    app_name = app_name.rsplit(".", maxsplit=1)[-1]
                     app = apps.get_app_config(app_name)
                 except LookupError as exc:
                     raise CommandError(
