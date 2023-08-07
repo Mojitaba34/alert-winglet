@@ -26,7 +26,7 @@ class DiscordDelivery(BaseSender):
 
     Raises:
         ValueError: If neither `content`, `file`, nor `embeds` are provided.
-        ValueError: If `webhook` is not provided.
+        AttributeError: If `DISCORD_WEBHOOK_URL` is not provided in settings.
 
     Methods:
         post():
@@ -77,7 +77,7 @@ class DiscordDelivery(BaseSender):
 
         Raises:
             ValueError: If neither `content`, `file`, nor `embeds` are provided.
-            ValueError: If `webhook` is not provided.
+            AttributeError: If `DISCORD_WEBHOOK_URL` is not provided in settings.
         """
         if content is None and file is None and embeds is None:
             raise ValueError("Required one of content, file, embeds")
@@ -102,7 +102,9 @@ class DiscordDelivery(BaseSender):
         try:
             self.webhook = settings.DISCORD_WEBHOOK_URL
         except AttributeError:
-            raise ValueError("DISCORD_WEBHOOK_URL variable must set in django settings")
+            raise AttributeError(
+                "DISCORD_WEBHOOK_URL variable must set in django settings"
+            )
 
         self.DATA["tts"] = tts
 
