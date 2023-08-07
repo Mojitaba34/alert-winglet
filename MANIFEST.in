@@ -3,7 +3,7 @@ include README.rst
 include setup.cfg
 include setup.py
 include pyproject.toml
-global-exclude *
+
 recursive-include apps/alert_winglet __init__.py apps.py base/* discord/* tests/*
 recursive-exclude apps/core *
 recursive-exclude config/ *
