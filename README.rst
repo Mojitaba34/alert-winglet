@@ -6,40 +6,43 @@ A Django app to send any exception to a Discord channel.
 Quick start
 -----------
 
-1. Add "alert-winglet" to your `INSTALLED_APPS` setting in your Django project's settings file:
+Installation
+------------
 
-   .. code-block:: Django
+You can install ``django-alert-winglet`` using ``pip``::
+    pip install django-alert-winglet
 
-        INSTALLED_APPS = [
-            ...,
-            "alert-winglet",
-        ]
+1. Add "alert_winglet" to your `INSTALLED_APPS` setting in your Django project's settings file::
+
+    INSTALLED_APPS = [
+        ...,
+        "alert_winglet",
+    ]
+
 
 Discord
 -------
 
 1. Set the `DISCORD_WEBHOOK_URL` variable in your Django settings. This is the URL of the Discord webhook you want to use for sending exceptions.
 
-2. Use the `DiscordEmbedManager` class to create a Discord Embed object.
+2. Use the `DiscordEmbedManager` class to create a Discord Embed object.::
 
-  .. code-block:: Django
-          # If the request is not provided, the `extra_detail` variable will be None
-          discord_manager = DiscordEmbedManager(
-                exc,
-            )
-          formatted_exc, extra_detail = discord_manager.format_exception()
-          data = discord_manager.prepare_embed_data(formatted_exc, extra_detail)
+    # If the request is not provided, the `extra_detail` variable will be None
+    discord_manager = DiscordEmbedManager(
+          exc,
+      )
+    formatted_exc, extra_detail = discord_manager.format_exception()
+    data = discord_manager.prepare_embed_data(formatted_exc, extra_detail)
 
 3. Then use the `DiscordDelivery` class to send the exception to your Discord channel using the webhook.
-This class can be used for other purposes as well, like sending messages or files...
+This class can be used for other purposes as well, like sending messages or files... ::
 
-  .. code-block:: Django
-            delivery = DiscordDelivery(
-                embeds=[
-                    data,
-                ]
-            )
-            delivery.send()
+    delivery = DiscordDelivery(
+        embeds=[
+            data,
+        ]
+    )
+    delivery.send()
 Requirements
 ------------
 
