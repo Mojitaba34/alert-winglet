@@ -19,7 +19,6 @@ You can install ``django-alert-winglet`` using ``pip``::
         "alert_winglet",
     ]
 
-
 Discord
 -------
 
@@ -43,6 +42,7 @@ This class can be used for other purposes as well, like sending messages or file
         ]
     )
     delivery.send()
+
 Requirements
 ------------
 
