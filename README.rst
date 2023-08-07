@@ -46,7 +46,7 @@ This class can be used for other purposes as well, like sending messages or file
 Requirements
 ------------
 
-- django ~= 4.1.5
+- django >= 3.0
 - discord.py ~=2.2.3
 - requests ~=2.28.2
 
