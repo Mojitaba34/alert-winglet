@@ -1,9 +1,8 @@
 include LICENSE
 include README.rst
+include setup.cfg
+include setup.py
+include pyproject.toml
 
-global-exclude *
-
-global-include setup.py setup.cfg README.rst pyproject.toml LICENSE
-
-recursive-include /apps /alert_winglet
+include /apps/alert_winglet
 
