@@ -4,10 +4,10 @@ include setup.cfg
 include setup.py
 include pyproject.toml
 global-exclude *
-recursive-include apps\alert_winglet __init__.py apps.py base\* discord\* tests\*
-recursive-exclude apps\core *
-recursive-exclude config\ *
-recursive-exclude apps\alert_winglet\__pycache__ *
-recursive-exclude apps\alert_winglet\tests\__pycache__ *
-recursive-exclude apps\alert_winglet\discord\__pycache__ *
-recursive-exclude apps\alert_winglet\base\__pycache__ *
+recursive-include apps/alert_winglet __init__.py apps.py base/* discord/* tests/*
+recursive-exclude apps/core *
+recursive-exclude config/ *
+recursive-exclude apps/alert_winglet/__pycache__ *
+recursive-exclude apps/alert_winglet/tests/__pycache__ *
+recursive-exclude apps/alert_winglet/discord/__pycache__ *
+recursive-exclude apps/alert_winglet/base/__pycache__ *
