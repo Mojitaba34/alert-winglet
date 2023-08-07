@@ -4,5 +4,4 @@ include setup.cfg
 include setup.py
 include pyproject.toml
 
-include /apps/alert_winglet
-
+recursive-include apps/alert_winglet *
