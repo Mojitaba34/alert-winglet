@@ -33,13 +33,13 @@ Discord
 3. Then use the `DiscordDelivery` class to send the exception to your Discord channel using the webhook.
 This class can be used for other purposes as well, like sending messages or files...
 
-.. code-block:: Django
-          delivery = DiscordDelivery(
-              embeds=[
-                  data,
-              ]
-          )
-          delivery.send()
+  .. code-block:: Django
+            delivery = DiscordDelivery(
+                embeds=[
+                    data,
+                ]
+            )
+            delivery.send()
 Requirements
 ------------
 
