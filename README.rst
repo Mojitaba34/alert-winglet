@@ -27,11 +27,13 @@ Discord
           discord_manager = DiscordEmbedManager(
                 exc,
             )
-        formatted_exc, extra_detail = discord_manager.format_exception()
-        data = discord_manager.prepare_embed_data(formatted_exc, extra_detail)
+          formatted_exc, extra_detail = discord_manager.format_exception()
+          data = discord_manager.prepare_embed_data(formatted_exc, extra_detail)
+
 3. Then use the `DiscordDelivery` class to send the exception to your Discord channel using the webhook.
 This class can be used for other purposes as well, like sending messages or files...
-  .. code-block:: Django
+
+.. code-block:: Django
           delivery = DiscordDelivery(
               embeds=[
                   data,
