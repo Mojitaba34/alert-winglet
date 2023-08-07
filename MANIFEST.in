@@ -5,5 +5,5 @@ global-exclude *
 
 global-include setup.py setup.cfg README.rst pyproject.toml LICENSE
 
-recursive-include apps/alert_winglet *
+recursive-include /apps /alert_winglet
 
