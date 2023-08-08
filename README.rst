@@ -24,7 +24,9 @@ Discord
 
 1. Set the `DISCORD_WEBHOOK_URL` variable in your Django settings. This is the URL of the Discord webhook you want to use for sending exceptions.
 
-2. Use the `DiscordEmbedManager` class to create a Discord Embed object.::
+2. Use the `DiscordEmbedManager` class to create a Discord Embed object. ::
+
+    from alert_winglet.discord.manager import DiscordEmbedManager
 
     # If the request is not provided, the `extra_detail` variable will be None
     discord_manager = DiscordEmbedManager(
@@ -34,7 +36,9 @@ Discord
     data = discord_manager.prepare_embed_data(formatted_exc, extra_detail)
 
 3. Then use the `DiscordDelivery` class to send the exception to your Discord channel using the webhook.
-This class can be used for other purposes as well, like sending messages or files... ::
+This class can be used for other purposes as well, like sending messages or files... . ::
+
+    from alert_winglet.discord.sender import DiscordDelivery
 
     delivery = DiscordDelivery(
         embeds=[
@@ -43,12 +47,13 @@ This class can be used for other purposes as well, like sending messages or file
     )
     delivery.send()
 
+
 Requirements
 ------------
 
 - django >= 3.0
-- discord.py ~=2.2.3
-- requests ~=2.28.2
+- discord.py >=2.2.3
+- requests >=2.28.2
 
 License
 -------
