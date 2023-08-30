@@ -61,6 +61,7 @@ class DiscordDelivery(BaseSender):
         file: Any = None,
         embeds: list = None,
         allowed_mentions=None,
+        webhook=None,
     ):
         """
         Initializes a new Discord message or file.
@@ -99,12 +100,14 @@ class DiscordDelivery(BaseSender):
 
         self.file = file
 
-        try:
-            self.webhook = settings.DISCORD_WEBHOOK_URL
-        except AttributeError:
-            raise AttributeError(
-                "DISCORD_WEBHOOK_URL variable must set in django settings"
-            )
+        self.webhook = webhook
+        if not self.webhook:
+            try:
+                self.webhook = settings.DISCORD_WEBHOOK_URL
+            except AttributeError:
+                raise AttributeError(
+                    "DISCORD_WEBHOOK_URL variable must set in django settings or passed as argument to the class"
+                )
 
         self.DATA["tts"] = tts
 
